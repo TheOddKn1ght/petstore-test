@@ -12,6 +12,13 @@ def test_get_pet(api_client, pet_data):
     assert body["id"] == pet_data["id"]
     assert body["name"] == pet_data["name"]
 
+def test_find_pets_by_status(api_client, pet_data):
+    r = api_client.get("/pet/findByStatus", params={"status": pet_data["status"]})
+    assert r.status_code == 200
+    body = r.json()
+    assert isinstance(body, list)
+    assert any(p["id"] == pet_data["id"] for p in body)
+
 def test_update_pet(api_client, pet_data, updated_pet_data):
     r = api_client.put("/pet", json=updated_pet_data)
     assert r.status_code == 200

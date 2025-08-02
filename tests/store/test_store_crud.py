@@ -2,10 +2,10 @@ def test_get_store_inventory(api_client):
     r = api_client.get("/store/inventory")
     assert r.status_code == 200
     body = r.json()
-    assert isinstance(body, dict), "response must be a JSON object"
+    assert isinstance(body, dict)
     for key in ["available", "pending", "sold"]:
-        assert key in body, f"missing key: {key}"
-        assert isinstance(body[key], int), f"value for {key} should be an integer"
+        assert key in body
+        assert isinstance(body[key], int)
 
 def test_order_pet(api_client, store_pet_data, order_data):
     r_pet = api_client.post("/pet", json=store_pet_data)
