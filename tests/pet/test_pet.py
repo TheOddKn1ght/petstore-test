@@ -1,17 +1,3 @@
-import pytest
-from faker import Faker
-import random
-
-fake = Faker()
-
-@pytest.fixture(scope="session")
-def pet_data():
-    return {
-        "id": random.randint(1000000, 9999999),
-        "name": fake.first_name(),
-        "status": random.choice(["available", "pending", "sold"])
-    }
-
 def test_create_pet(api_client, pet_data):
     r = api_client.post("/pet", json=pet_data)
     assert r.status_code == 200
@@ -27,14 +13,13 @@ def test_get_pet(api_client, pet_data):
     assert body["id"] == pet_data["id"]
     assert body["name"] == pet_data["name"]
 
-def test_update_pet(api_client, pet_data):
+def test_update_pet(api_client, pet_data, updated_pet_data):
     api_client.post("/pet", json=pet_data)
-    updated = dict(pet_data, status="sold", name=fake.first_name())
-    r = api_client.put("/pet", json=updated)
+    r = api_client.put("/pet", json=updated_pet_data)
     assert r.status_code == 200
     body = r.json()
     assert body["status"] == "sold"
-    assert body["name"] == updated["name"]
+    assert body["name"] == updated_pet_data["name"]
 
 def test_delete_pet(api_client, pet_data):
     api_client.post("/pet", json=pet_data)

@@ -1,22 +1,3 @@
-import pytest
-from faker import Faker
-import random
-
-fake = Faker()
-
-@pytest.fixture
-def user_data():
-    return {
-        "id": random.randint(1000000, 9999999),
-        "username": fake.user_name(),
-        "firstName": fake.first_name(),
-        "lastName": fake.last_name(),
-        "email": fake.email(),
-        "password": fake.password(),
-        "phone": fake.phone_number(),
-        "status": 1
-    }
-
 #TODO: separate to different tests
 def test_create_user(api_client, user_data):
     r_create = api_client.post("/user", json=user_data)
