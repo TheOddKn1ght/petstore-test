@@ -1,6 +1,6 @@
 def test_create_user(api_client, user_data):
     r_post = api_client.post(f"/user", json=user_data)
-    assert r_post.status_code == 200 # kinda meanigless since it's always 200 for some reason
+    assert r_post.status_code == 200 # kinda meaningless since it's always 200 for some reason
 
 def test_get_user(api_client, user_data):
     r_get = api_client.get(f"/user/{user_data['username']}")
