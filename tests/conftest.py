@@ -16,5 +16,6 @@ def api_client(base_url):
 
 pytest_plugins = [
     "fixtures.common_fixtures",
+    "fixtures.negative_fixtures",
 ]
 
