@@ -1,10 +1,11 @@
 import pytest
 import random
+import os
 
 @pytest.fixture(scope="session")
 def pet_data(fake):
     return {
-        "id": random.randint(1000000, 9999999),
+        "id": random.randint(99999999, 9999999999),
         "name": fake.first_name(),
         "status": random.choice(["available", "pending", "sold"])
     }
@@ -12,6 +13,17 @@ def pet_data(fake):
 @pytest.fixture(scope="session")
 def updated_pet_data(pet_data, fake):
     return dict(pet_data, status="sold", name=fake.first_name())
+
+@pytest.fixture
+def sample_pet_image():
+    media_dir = os.path.join(os.path.dirname(__file__), "..", "tests", "resources", "images")
+    image_path = os.path.abspath(os.path.join(media_dir, "test_pet.jpg"))
+
+    if not os.path.exists(image_path):
+        pytest.skip("image not found in tests/media/")
+
+    with open(image_path, "rb") as img:
+        yield {"file": ("test_pet.jpg", img, "image/jpeg")}
 
 @pytest.fixture(scope="session")
 def user_data(fake):
@@ -29,7 +41,7 @@ def user_data(fake):
 @pytest.fixture(scope="session")
 def store_pet_data(fake):
     return {
-        "id": random.randint(2000000, 2999999),
+        "id": random.randint(9999999, 9999999999),
         "name": fake.first_name(),
         "status": "available",
     }

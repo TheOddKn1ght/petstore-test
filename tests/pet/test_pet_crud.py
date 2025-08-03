@@ -19,6 +19,18 @@ def test_find_pets_by_status(api_client, pet_data):
     assert isinstance(body, list)
     assert any(p["id"] == pet_data["id"] for p in body)
 
+def test_upload_image(api_client, pet_data, sample_pet_image):
+    r_upload = api_client.post(
+        f"/pet/{pet_data['id']}/uploadImage", 
+        files=sample_pet_image
+    )
+
+    assert r_upload.status_code == 200
+    body = r_upload.json()
+    assert body["code"] == 200
+    assert "message" in body
+    assert "test_pet.jpg" in body["message"]
+
 def test_update_pet(api_client, pet_data, updated_pet_data):
     r = api_client.put("/pet", json=updated_pet_data)
     assert r.status_code == 200
