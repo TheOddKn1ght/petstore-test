@@ -28,7 +28,6 @@ def sample_pet_image():
 @pytest.fixture(scope="session")
 def user_data(fake):
     return {
-        # "id": random.randint(1000000, 9999999),
         "username": fake.user_name(),
         "firstName": fake.first_name(),
         "lastName": fake.last_name(),
@@ -62,7 +61,6 @@ def bulk_users(fake):
     users = []
     for i in range(3):
         users.append({
-            # "id": random.randint(1000000, 9999999),
             "username": fake.user_name(),
             "firstName": fake.first_name(),
             "lastName": fake.last_name(),
