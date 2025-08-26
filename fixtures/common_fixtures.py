@@ -20,7 +20,7 @@ def sample_pet_image():
     image_path = os.path.abspath(os.path.join(media_dir, "test_pet.jpg"))
 
     if not os.path.exists(image_path):
-        pytest.skip("image not found in tests/media/")
+        pytest.skip("image not found in tests/resources/images")
 
     with open(image_path, "rb") as img:
         yield {"file": ("test_pet.jpg", img, "image/jpeg")}
